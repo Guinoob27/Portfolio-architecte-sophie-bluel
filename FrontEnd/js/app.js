@@ -53,7 +53,6 @@ async function getWorks(filter) {
     const div = document.createElement("div");
     div.className = data.id;
     div.addEventListener("click", () => getWorks(data.id));
-    // Demander au mentor si j'ai un autre choix que de mettre l'id commen nom de classe
     div.innerHTML = `${data.name}`;
     document.querySelector(".div-container").append(div);
   }

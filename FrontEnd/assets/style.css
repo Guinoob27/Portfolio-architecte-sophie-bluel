@@ -23,6 +23,12 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+a {
+	color: black;
+}
+a:visited {
+	color: black;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -30,6 +36,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
