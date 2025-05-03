@@ -58,3 +58,16 @@ async function getWorks(filter) {
   }
   
   document.querySelector(".tous").addEventListener("click", () => getWorks());
+  
+  function displayAdminMode() {
+    if (sessionStorage.authToken) {
+      console.log("ok");
+      const editBanner = document.createElement("div");
+      editBanner.className = "edit";
+      editBanner.innerHTML =
+        '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>';
+      document.body.prepend(editBanner);
+    }
+  }
+  
+  displayAdminMode();
