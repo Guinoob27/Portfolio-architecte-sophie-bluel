@@ -1,7 +1,26 @@
+.container {
+     display: flex;
+     align-items: center; /* Centre verticalement les éléments */
+ 	justify-content: center;
+ }
+ 
+ .container h2 {
+     text-align: center; /* Centre le texte à l'intérieur de h2 */
+ }
+ 
+ .container p {
+     margin-left: 10px; /* Ajuste l'espace entre h2 et p selon vos besoins */
+ }
+
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
+
+* {
+	box-sizing: border-box;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -25,6 +44,7 @@ time, mark, audio, video {
 }
 a {
 	color: black;
+	text-decoration: none;
 }
 a:visited {
 	color: black;
@@ -131,8 +151,12 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	
 }
+.js-modal-2 {
+	padding-top: 10px;
+}
+
 .div-container {
 	min-width: 550px;
  	width: 50%;
@@ -164,6 +188,80 @@ li:hover {
 	width: 100%;
 
 }
+.close-button-container{
+	display: flex;
+	justify-content: flex-end;
+}
+.projets-title {
+	margin-bottom: 0;
+}
+
+.projets-container {
+	display: flex;
+	justify-content: center; 
+	gap: 10px; 
+}
+.js-modal-close {
+	border: none;
+	background-color: white;
+	font-size: 18px;
+}
+.modal-wrapper h3 {
+	font-size: 18px;
+	text-align: center;
+	display: block;
+	margin-bottom: 40px;
+}
+.modal-gallery {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+}
+.modal-gallery img {
+	width: 100%;
+}
+.modal-wrapper hr {
+	margin-top: 30px;
+
+}
+.modal-button-container{
+	display: flex;
+	justify-content: center;
+}
+.add-photo-button {
+	padding: 10px 20px;
+	margin-top: 10px;
+	border: 1px solid #1D6154;
+	border-radius: 25px;
+	font-family: 'Syne';
+	color: white;
+	cursor: pointer;
+	background-color: #1D6154;
+	width: 250px;
+}
+.image-container {
+	position: relative;
+	display: inline-block;
+}
+
+.image-container img {
+	display: block;
+}
+
+.image-container .overlay-icon {
+	position: absolute;
+	top: 6px;
+	right: 6px; 
+	font-size: 16px; /* Ajustez cette valeur pour la taille de l'icône */
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	padding: 4px;
+	border-radius: 10%;
+}
+
 #contact {
 	width: 50%;
 margin: auto;
@@ -230,4 +328,34 @@ footer nav ul {
 	position: absolute; 
 	left: 0; 
 	top: 0; 
+}
+
+.edit a {
+	color: white;
+}
+.edit a:visited {
+	color: white;
+}
+
+/* modal */
+
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0,0,0.8);
+}
+
+.modal-wrapper {
+	overflow: auto;
+	width: 600px;
+	max-width: calc(100vh - 20px);
+	max-height: calc(100vh - 20px);
+	padding: 20px;
+	background-color: white;
 }
