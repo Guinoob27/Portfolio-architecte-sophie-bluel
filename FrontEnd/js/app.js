@@ -20,7 +20,7 @@ async function getWorks(filter) {
         setFigureModal(json[i]);
       }
     }
-    //Delete
+    //Delete icons
     const trashCans = document.querySelectorAll(".fa-trash-can");
     trashCans.forEach((e) =>
       e.addEventListener("click", (event) => deleteWork(event))
@@ -113,7 +113,10 @@ const openModal = function (e) {
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", "true");
   modal.addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+  modal
+    .querySelectorAll(".js-modal-close")
+    .forEach((e) => e.addEventListener("click", closeModal));
+
   modal
     .querySelector(".js-modal-stop")
     .addEventListener("click", stopPropagation);
@@ -191,3 +194,114 @@ async function deleteWork(event) {
     console.log(result);
   }
 }
+
+// Modale switch
+
+const addPhotoButton = document.querySelector(".add-photo-button");
+const backButton = document.querySelector(".js-modal-back");
+
+addPhotoButton.addEventListener("click", toggleModal);
+backButton.addEventListener("click", toggleModal);
+
+function toggleModal() {
+  const galleryModal = document.querySelector(".gallery-modal");
+  const addModal = document.querySelector(".add-modal");
+
+  if (
+    galleryModal.style.display === "block" ||
+    galleryModal.style.display === ""
+  ) {
+    galleryModal.style.display = "none";
+    addModal.style.display = "block";
+  } else {
+    galleryModal.style.display = "block";
+    addModal.style.display = "none";
+  }
+}
+
+// Add images
+
+
+let img = document.createElement("img");
+let file;
+
+document.querySelector("#file").style.display = "none";
+document.getElementById("file").addEventListener("change", function (event) {
+  file = event.target.files[0];
+  if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      img.src = e.target.result;
+      img.alt = "Uploaded Photo";
+      document.getElementById("photo-container").appendChild(img);
+    };
+    reader.readAsDataURL(file);
+    document
+      .querySelectorAll(".picture-loaded")
+      .forEach((e) => (e.style.display = "none"));
+  } else {
+    alert("Veuillez sélectionner une image au format JPG ou PNG.");
+  }
+});
+
+//  Submit images
+const titleInput = document.getElementById("title");
+let titleValue = "";
+
+let selectedValue = "1";
+
+document.getElementById("category").addEventListener("change", function () {
+  selectedValue = this.value;
+});
+
+titleInput.addEventListener("input", function () {
+  titleValue = titleInput.value;
+  console.log("Titre actuel :", titleValue);
+});
+
+const addPictureForm = document.getElementById("picture-form");
+
+addPictureForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const hasImage = document.querySelector("#photo-container").firstChild;
+  if (hasImage && titleValue) {
+    // Créez un nouvel objet FormData
+    const formData = new FormData();
+
+    // Ajout du fichier au FormData
+    formData.append("image", file);
+    formData.append("title", titleValue);
+    formData.append("category", selectedValue);
+
+    const token = sessionStorage.authToken;
+
+    if (!token) {
+      console.error("Token d'authentification manquant.");
+      return;
+    }
+
+   let response = await fetch("http://localhost:5678/api/works", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer " + token,
+  },
+  body: formData,
+});
+
+if (!response.ok) {
+  const errorData = await response.json();
+  console.error("Erreur : ", errorData);
+  const errorBox = document.createElement("div");
+  errorBox.className = "error-login";
+  errorBox.innerHTML = `Il y a eu une erreur : ${errorData.message || JSON.stringify(errorData)}`;
+  document.querySelector("form").prepend(errorBox);
+} else {
+  const result = await response.json();
+  console.log("Succès :", result);
+}
+    console.log("hasImage and titleValue is true");
+  } else {
+    alert("Veuillez remplir tous les champs");
+    
+  }
+});

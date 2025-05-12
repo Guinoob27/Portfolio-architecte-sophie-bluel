@@ -19,16 +19,53 @@
 	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"
 		style="display: none">
 		<div class="modal-wrapper js-modal-stop">
-			<div class="close-button-container">
-				<button class="js-modal-close">
-					<i class="fa-solid fa-xmark"></i>
-				</button>
+			<div class="gallery-modal">
+				<div class="close-button-container">
+					<button class="js-modal-close">
+						<i class="fa-solid fa-xmark"></i>
+					</button>
+				</div>
+				<h3>Galerie Photo</h3>
+				<div class="modal-gallery"></div>
+				
+				<hr />
+				<div class="modal-button-container">
+					<button class="add-photo-button">Ajouter une photo</button>
+				</div>
 			</div>
-			<h3>Galerie Photo</h3>
-			<div class="modal-gallery"></div>
-			<hr />
-			<div class="modal-button-container">
-			  <button class="add-photo-button">Ajouter une photo</button>
+			<!--  -->
+			<div class="add-modal" style="display: none;">
+				<div class="modal-buttons-container">
+					<button class="js-modal-back">
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+					<button class="js-modal-close">
+						<i class="fa-solid fa-xmark"></i>
+					</button>
+				</div>
+
+				<h3>Ajout photo</h3>
+				<div class="form add-photo-form">
+					<form id="picture-form" action="#" method="post">
+						<div class="file-section">
+							<div id="photo-container"></div>
+							<div><i class="fa-regular fa-image picture-loaded"></i></div>
+							<label class="picture-loaded" for="file">+ Ajouter photo</label>
+							<input type="file" id="file" name="file" accept="image/png, image/jpeg" />
+							<p class="picture-loaded">jpg, png : 4mo max</p>
+						</div>
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" />
+						<label for="category">Catégorie</label>
+						<select id="category" name="category" size="1">
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hotels & restaurants</option>
+						</select>
+						<hr />
+						<input type="submit" value="Valider" />
+					</form>
+				</div>
 			</div>
 		</div>
 	</aside>
@@ -63,14 +100,15 @@
 		<section id="portfolio">
 			<div class="projets-container">
 				<h2 class="projets-title">Mes Projets</h2>
-				<a href="#modal1" style="display: none" class="js-modal js-modal-2"><i class="fa-regular fa-pen-to-square"></i>Modifier</a>
+				<a href="#modal1" style="display: none" class="js-modal js-modal-2"><i
+						class="fa-regular fa-pen-to-square"></i>Modifier</a>
 			</div>
 			<div class="div-container">
 				<div class="tous">Tous</div>
 			</div>
 			<div class="gallery"></div>
 		</section>
-		<section id="contact">
+		<div class="form">
 			<h2 id="contact">Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
 			<form action="#" method="post">
@@ -82,7 +120,7 @@
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
 				<input type="submit" value="Envoyer">
 			</form>
-		</section>
+		</div>
 	</main>
 
 	<footer>
