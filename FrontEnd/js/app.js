@@ -172,7 +172,7 @@ document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 // Delete Function
- 
+
 async function deleteWork(event) {
   event.stopPropagation();
   const id = event.srcElement.id;
@@ -190,8 +190,24 @@ async function deleteWork(event) {
     errorBox.innerHTML = "Il y a eu une erreur";
     document.querySelector(".modal-button-container").prepend(errorBox);
   } else {
-    let result = await response.json();
-    console.log(result);
+    // Supprimer dans la modale
+    const trashIcon = event.target;
+    const modalFigure = trashIcon.closest("figure");
+    if (modalFigure) {
+      modalFigure.remove();
+    }
+
+    // Supprimer dans la galerie principale
+    const title = trashIcon.closest("figure").querySelector("figcaption")?.textContent;
+    const galleryFigures = document.querySelectorAll(".gallery figure");
+
+    galleryFigures.forEach((figure) => {
+      if (figure.querySelector("figcaption")?.textContent === title) {
+        figure.remove();
+      }
+    });
+
+    console.log("Projet supprimé de la modale et de la galerie.");
   }
 }
 
@@ -228,6 +244,7 @@ let file;
 document.querySelector("#file").style.display = "none";
 document.getElementById("file").addEventListener("change", function (event) {
   file = event.target.files[0];
+
   if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -239,7 +256,8 @@ document.getElementById("file").addEventListener("change", function (event) {
     document
       .querySelectorAll(".picture-loaded")
       .forEach((e) => (e.style.display = "none"));
-  } else {
+  }
+   else {
     alert("Veuillez sélectionner une image au format JPG ou PNG.");
   }
 });
@@ -280,28 +298,46 @@ addPictureForm.addEventListener("submit", async (event) => {
       return;
     }
 
-   let response = await fetch("http://localhost:5678/api/works", {
-  method: "POST",
-  headers: {
-    Authorization: "Bearer " + token,
-  },
-  body: formData,
-});
+    let response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      body: formData,
+    });
 
-if (!response.ok) {
-  const errorData = await response.json();
-  console.error("Erreur : ", errorData);
-  const errorBox = document.createElement("div");
-  errorBox.className = "error-login";
-  errorBox.innerHTML = `Il y a eu une erreur : ${errorData.message || JSON.stringify(errorData)}`;
-  document.querySelector("form").prepend(errorBox);
-} else {
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Erreur : ", errorData);
+      const errorBox = document.createElement("div");
+      errorBox.className = "error-login";
+      errorBox.innerHTML = `Il y a eu une erreur : ${errorData.message || JSON.stringify(errorData)}`;
+      document.querySelector("form").prepend(errorBox);
+    } else {
   const result = await response.json();
   console.log("Succès :", result);
+
+  // 🔄 Recharge les galeries
+  getWorks();
+
+  // ✅ Fermer la modale
+  closeModal(new Event("close"));
+
+  // 🧹 Nettoyer le formulaire
+  document.getElementById("title").value = "";
+  titleValue = "";
+
+  document.getElementById("category").value = "1";
+  selectedValue = "1";
+
+  const photoContainer = document.getElementById("photo-container");
+  photoContainer.innerHTML = "";
+
+  document.querySelectorAll(".picture-loaded").forEach((e) => e.style.display = "flex");
 }
     console.log("hasImage and titleValue is true");
   } else {
     alert("Veuillez remplir tous les champs");
-    
+
   }
 });
