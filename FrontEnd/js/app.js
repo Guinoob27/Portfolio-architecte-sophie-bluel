@@ -94,6 +94,7 @@ function displayAdminMode() {
     document.querySelector(".log-button").textContent = "logout";
     document.querySelector(".log-button").addEventListener("click", () => {
       sessionStorage.removeItem("authToken");
+
     });
   }
 }
@@ -257,7 +258,7 @@ document.getElementById("file").addEventListener("change", function (event) {
       .querySelectorAll(".picture-loaded")
       .forEach((e) => (e.style.display = "none"));
   }
-   else {
+  else {
     alert("Veuillez sélectionner une image au format JPG ou PNG.");
   }
 });
@@ -314,27 +315,30 @@ addPictureForm.addEventListener("submit", async (event) => {
       errorBox.innerHTML = `Il y a eu une erreur : ${errorData.message || JSON.stringify(errorData)}`;
       document.querySelector("form").prepend(errorBox);
     } else {
-  const result = await response.json();
-  console.log("Succès :", result);
+      const result = await response.json();
+      console.log("Succès :", result);
 
-  // 🔄 Recharge les galeries
-  getWorks();
+      //  Recharge les galeries
+      getWorks();
 
-  // ✅ Fermer la modale
-  closeModal(new Event("close"));
+      //  Fermer la modale
+      closeModal(new Event("close"));
+      // Réinitialiser la vue pour que la prochaine ouverture affiche la galerie
+      document.querySelector(".gallery-modal").style.display = "block";
+      document.querySelector(".add-modal").style.display = "none";
 
-  // 🧹 Nettoyer le formulaire
-  document.getElementById("title").value = "";
-  titleValue = "";
+      //  Nettoyer le formulaire
+      document.getElementById("title").value = "";
+      titleValue = "";
 
-  document.getElementById("category").value = "1";
-  selectedValue = "1";
+      document.getElementById("category").value = "1";
+      selectedValue = "1";
 
-  const photoContainer = document.getElementById("photo-container");
-  photoContainer.innerHTML = "";
+      const photoContainer = document.getElementById("photo-container");
+      photoContainer.innerHTML = "";
 
-  document.querySelectorAll(".picture-loaded").forEach((e) => e.style.display = "flex");
-}
+      document.querySelectorAll(".picture-loaded").forEach((e) => e.style.display = "flex");
+    }
     console.log("hasImage and titleValue is true");
   } else {
     alert("Veuillez remplir tous les champs");
