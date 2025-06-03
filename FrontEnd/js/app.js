@@ -1,3 +1,4 @@
+// Fonction filtres
 async function getWorks(filter) {
   document.querySelector(".gallery").innerHTML = "";
   document.querySelector(".modal-gallery").innerHTML = "";
@@ -52,7 +53,7 @@ function setFigureModal(data) {
   document.querySelector(".modal-gallery").append(figure);
 }
 
-
+// Fonction Categories
 async function getCategories() {
   const url = "http://localhost:5678/api/categories";
   try {
@@ -81,6 +82,7 @@ function setFilter(data) {
 
 document.querySelector(".tous").addEventListener("click", () => getWorks());
 
+// Fonction AdminMode
 function displayAdminMode() {
   if (sessionStorage.authToken) {
     document.querySelector(".div-container").style.display = "none";
@@ -104,7 +106,7 @@ displayAdminMode();
 let modal = null;
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
-
+// Fonction Ouverture Modal
 const openModal = function (e) {
   e.preventDefault();
   modal = document.querySelector(e.target.getAttribute("href"));
@@ -122,7 +124,7 @@ const openModal = function (e) {
     .querySelector(".js-modal-stop")
     .addEventListener("click", stopPropagation);
 };
-
+// Fonction Fermeture Modal
 const closeModal = function (e) {
   if (modal === null) return;
   e.preventDefault();
@@ -172,8 +174,8 @@ window.addEventListener("keydown", function (e) {
 document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
-// Delete Function
 
+// Fonction Suppression 
 async function deleteWork(event) {
   event.stopPropagation();
   const id = event.srcElement.id;
